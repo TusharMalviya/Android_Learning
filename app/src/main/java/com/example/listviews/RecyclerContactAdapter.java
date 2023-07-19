@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContactAdapter.ViewHolder> {
+
+    private int lastPos=-1;
     @NonNull
     Context context;
     ArrayList<ContactModel> arrContacts;
@@ -44,6 +48,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         holder.imgContact.setImageResource(arrContacts.get(position).img);
         holder.txtName.setText(arrContacts.get(position).name);
         holder.txtNumber.setText(arrContacts.get(position).number);
+        setAnimation(holder.itemView,position);
 
         holder.row1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,5 +146,17 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             row1= itemView.findViewById(R.id.row1);
 
         }
+    }
+
+
+    private void setAnimation (View viewAnimated, int position){
+
+        if(position>lastPos) {
+
+            Animation slideIn = AnimationUtils.loadAnimation(context, R.anim.contact_anim);
+            viewAnimated.setAnimation(slideIn);
+            lastPos = position;
+        }
+
     }
 }
